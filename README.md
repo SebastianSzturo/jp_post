@@ -1,4 +1,4 @@
-## JpPost :postbox:
+## JP Post :postbox:
 
 A gem to access JP Post Services.
 
@@ -10,13 +10,13 @@ A gem to access JP Post Services.
 Add this to your gemfile
 
 ```ruby
-	gem 'jp_post'
+gem 'jp_post'
 ```
 
 and
 
 ```
-	bundle
+bundle
 ```
 
 ## Tracking
