@@ -1,4 +1,5 @@
 ## JP Post :postbox:
+[![Build Status](https://travis-ci.org/SebastianSzturo/jp_post.svg?branch=master)](https://travis-ci.org/SebastianSzturo/jp_post) [![Code Climate](https://codeclimate.com/github/SebastianSzturo/jp_post/badges/gpa.svg)](https://codeclimate.com/github/SebastianSzturo/jp_post)
 
 A gem to access JP Post Services.
 
