@@ -15,7 +15,7 @@ module JpPost
       @tracking_number = tracking_number
       tracking_url = "https://trackings.post.japanpost.jp/services/srv/search/direct?reqCodeNo1=#{@tracking_number}&locale=en"
 
-      @tracking_page = Nokogiri::HTML(open(tracking_url))
+      @tracking_page = Nokogiri::HTML(Typhoeus.get(tracking_url).body)
 
       raise RuntimeError, "No Tracking found." if @tracking_page.css(".indent table[summary='履歴情報']").empty?
     end
