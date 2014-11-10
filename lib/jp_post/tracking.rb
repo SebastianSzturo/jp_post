@@ -23,9 +23,9 @@ module JpPost
     # Returns classification String.
     def classification
       return nil if tracking_is_empty
-      
-      @delivery_status_details_box ||= @tracking_page.css(".indent table[summary='配達状況詳細']")
-      classification = @delivery_status_details_box.css("tr:last .w_380").text.strip
+
+      delivery_status_details_box ||= @tracking_page.css(".indent table[summary='配達状況詳細']")
+      classification = delivery_status_details_box.css("tr:last .w_380").text.strip
       return classification
     end
 
@@ -35,8 +35,8 @@ module JpPost
     def additional_services
       return nil if tracking_is_empty
 
-      @delivery_status_details_box ||= @tracking_page.css(".indent table[summary='配達状況詳細']")
-      additional_services = @delivery_status_details_box.css(".w_100").last.text.strip
+      delivery_status_details_box ||= @tracking_page.css(".indent table[summary='配達状況詳細']")
+      additional_services = delivery_status_details_box.css(".w_100").last.text.strip
       return additional_services
     end
 
@@ -46,8 +46,8 @@ module JpPost
     def history
       return nil if tracking_is_empty
 
-      @history_information_box ||= @tracking_page.css(".indent table[summary='履歴情報']")
-      history_columns = @history_information_box.css("tr")
+      history_information_box ||= @tracking_page.css(".indent table[summary='履歴情報']")
+      history_columns = history_information_box.css("tr")
       history_columns = history_columns[2..history_columns.size] # remove header
 
       history = []
