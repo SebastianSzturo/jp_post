@@ -16,14 +16,14 @@ module JpPost
       tracking_url = "https://trackings.post.japanpost.jp/services/srv/search/direct?reqCodeNo1=#{@tracking_number}&locale=en"
 
       @tracking_page = Nokogiri::HTML(Typhoeus.get(tracking_url).body)
-
-      raise RuntimeError, "No Tracking found." if @tracking_page.css(".indent table[summary='履歴情報']").empty?
     end
 
     # "Class of Goods" string from tracking site
     #
     # Returns classification String.
     def classification
+      return nil if tracking_is_empty
+      
       @delivery_status_details_box ||= @tracking_page.css(".indent table[summary='配達状況詳細']")
       classification = @delivery_status_details_box.css("tr:last .w_380").text.strip
       return classification
@@ -33,6 +33,8 @@ module JpPost
     #
     # Returns additional_services String.
     def additional_services
+      return nil if tracking_is_empty
+
       @delivery_status_details_box ||= @tracking_page.css(".indent table[summary='配達状況詳細']")
       additional_services = @delivery_status_details_box.css(".w_100").last.text.strip
       return additional_services
@@ -42,6 +44,8 @@ module JpPost
     #
     # Returns tracking history as Array.
     def history
+      return nil if tracking_is_empty
+
       @history_information_box ||= @tracking_page.css(".indent table[summary='履歴情報']")
       history_columns = @history_information_box.css("tr")
       history_columns = history_columns[2..history_columns.size] # remove header
@@ -68,6 +72,16 @@ module JpPost
       end
 
       return history
+    end
+
+    private
+
+    def tracking_is_empty
+      if @tracking_page.css(".indent table[summary='履歴情報']").empty?
+        return true
+      else
+        return false
+      end
     end
 
   end

@@ -6,12 +6,6 @@ describe JpPost::Tracking do
       expect { JpPost::Tracking.new() }.to raise_error(ArgumentError)
     end
 
-    it "should not initialize with empty tracking number" do
-      VCR.use_cassette 'empty_tracking' do
-        expect { JpPost::Tracking.new("EL015307999123JP") }.to raise_error(RuntimeError)
-      end
-    end
-
     it "should initialize a tracking object" do
       VCR.use_cassette 'working_tracking' do
         package = JpPost::Tracking.new("EL015307999JP")
@@ -27,6 +21,13 @@ describe JpPost::Tracking do
         expect(package.classification).to be_kind_of(String)
       end
     end
+
+    it "should return nil with empty tracking number" do
+      VCR.use_cassette 'empty_tracking' do
+        package = JpPost::Tracking.new("EL015307999123JP")
+        expect(package.classification).to be_nil
+      end
+    end
   end
 
   describe "#history" do
@@ -36,6 +37,13 @@ describe JpPost::Tracking do
         expect(package.history).to be_kind_of(Array)
       end
     end
+
+    it "should return nil with empty tracking number" do
+      VCR.use_cassette 'empty_tracking' do
+        package = JpPost::Tracking.new("EL015307999123JP")
+        expect(package.history).to be_nil
+      end
+    end
   end
-  
+
 end
